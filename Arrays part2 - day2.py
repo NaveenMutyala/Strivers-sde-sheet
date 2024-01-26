@@ -76,3 +76,59 @@ def missingAndRepeating(arr, n):
     y= val2 - x
     return (y,x)
 
+from os import *
+from sys import *
+from collections import *
+from math import *
+
+def merge(arr,l,m,r):
+    cnt =0
+    i=l
+    j= m+1
+    temp =[]
+    while i<=m and j<=r:
+        if arr[i]<=arr[j]:
+            temp.append(arr[i])
+            i+=1
+        else:
+            temp.append(arr[j])
+            j+=1
+            cnt +=(m-i+1)
+    while i<=m:
+        temp.append(arr[i])
+        i+=1
+    while j<=r:
+        temp.append(arr[j])
+        j+=1
+    for i in range(l,r+1):
+        arr[i]=temp[i-l]
+    return cnt
+def mergeSort(arr,l,r):
+    cnt =0
+    if l>=r:
+        return cnt
+    m = (l+r)//2
+
+    cnt +=mergeSort(arr,l,m)
+    cnt+=mergeSort(arr,m+1,r)
+    cnt+=merge(arr,l,m,r)
+    return cnt
+
+def getInversions(arr, n) :
+	# Write your code here.
+	# return 
+    # inversions = [(1 if arr[i]>arr[j] and i<j else 0) for i in range(n) for j in range(i+1,n)]
+    # return sum(inversions)
+    l = 0
+    r = len(arr)-1
+    return mergeSort(arr,l,r)
+    
+# Taking inpit using fast I/O.
+def takeInput() :
+    n = int(input())
+    arr = list(map(int, stdin.readline().strip().split(" ")))
+    return arr, n
+
+# Main.
+arr, n = takeInput()
+print(getInversions(arr, n))
