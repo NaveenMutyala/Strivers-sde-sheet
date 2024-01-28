@@ -77,3 +77,48 @@ if __name__ == "__main__":
     obj = Solution()
     totalCount = obj.uniquePaths(2, 3)
     print("The total number of Unique Paths are", totalCount)
+
+
+class Solution:
+    def mergeSort(self,nums,l,r):
+        c=0
+        if l>=r:
+            return c
+        m = (l+r)//2
+        c += self.mergeSort(nums,l,m)
+        c+= self.mergeSort(nums,m+1,r)
+        c+=self.reverse(nums,l,m,r)
+        self.merge(nums,l,m,r)
+        return c
+    def merge(self,nums,l,m,r):
+        i = l
+        j= m+1
+        lt =[]
+        while i<=m and j<=r:
+            if nums[i]<nums[j]:
+                lt.append(nums[i])
+                i+=1
+            else:
+                lt.append(nums[j])
+                j+=1
+            
+        while i<=m:
+            lt.append(nums[i])
+            i+=1
+        while j <=r:
+            lt.append(nums[j])
+            j+=1
+        for i in range(l,r+1):
+            nums[i]=lt[i-l]
+    def reverse(self,nums,l,m,r):
+        c=0
+        j= m+1
+        for i in range(l,m+1):
+            while j<=r and nums[i]>2*nums[j]:j+=1
+            c+=j-(m+1)
+
+        return c
+
+
+    def reversePairs(self, nums: List[int]) -> int:
+        return self.mergeSort(nums,0,len(nums)-1)
