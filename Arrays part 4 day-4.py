@@ -100,3 +100,64 @@ def longestConsecutive(self, nums: List[int]) -> int:
                 longest = max(cnt,longest)
         return longest
 
+
+def maxLen(self, n, arr):
+        #Code here
+        di ={}
+        
+        mx = 0
+        
+        sm = 0
+        
+        for i in range(n):
+            sm+= arr[i]
+            if sm==0:
+                mx = max(mx,i+1)
+            
+            else:
+                if sm in di:
+                    mx = max(mx, i-di[sm])
+                else:
+                    di[sm]=i
+        return mx
+
+def subarraysWithSumK(a: [int], b: int) -> int:
+    # Write your code here
+    # pass
+    # x^k = xr
+    # x = xr^k
+    di = {0:1}
+    xr=0
+    res=0
+
+    for i in a:
+        xr = xr^i
+        temp = xr^b
+        if temp in di:
+            res += di[temp]
+        if xr in di:
+            di[xr]+=1
+        else:
+            di[xr]=1
+    return res
+
+
+def lengthOfLongestSubstring(self, s: str) -> int:
+        n = len(s)
+        if n<2:
+            return n
+        l=0
+        r =0 
+        mx =0
+        st =set()
+        while r<n:
+            if s[r] in st:
+                st.remove(s[l])
+                l+=1
+            else:
+                
+                st.add(s[r])
+                r+=1
+            mx =max(mx,r-l)
+        return mx 
+        
