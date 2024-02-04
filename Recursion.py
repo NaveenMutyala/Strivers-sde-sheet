@@ -14,3 +14,4 @@ def subsetSums(self, arr: List[int], n: int) -> List[int]:
         ans.sort()
         return ans
 
+
